@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+</head>
+<body style="font-family: sans-serif; margin: 0; padding: 0; background:#f7f7f7; color:#222;">
+  <header style="background:#111; color:#fff; padding:12px 24px;">
+    <a href="/" style="color:#fff; margin-right:12px;">Home</a>
+    <a href="/about" style="color:#fff; margin-right:12px;">About</a>
+    <a href="/contact" style="color:#fff;">Contact</a>
+  </header>
+
+  <main style="padding:24px; max-width:960px; margin:auto;">
+    <slot />
+  </main>
+
+  <footer style="text-align:center; padding:20px; font-size:14px; color:#666;">
+    © 2026 KingMo Group · Dongguan, China
+  </footer>
+</body>
+</html>

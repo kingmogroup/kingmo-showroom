@@ -1,0 +1,119 @@
+---
+const { title, activeCategory } = Astro.props;
+export const NAV_MENU = [
+  { name: "HOME PAGE", url: "/" },
+  { name: "ALL", url: "/all" },
+  { name: "BEANIE", url: "/beanie" },
+  { name: "SCARF", url: "/scarf" },
+  { name: "NECK WARMER", url: "/neck-warmer" },
+  { name: "BALACLAVA / HOODY HAT SCARF", url: "/balaclava-hoody" },
+  { name: "GLOVE", url: "/glove" },
+  { name: "FINGERLESS GLOVE + FLIP", url: "/fingerless-glove" },
+  { name: "ARM / LEG WARMER SLEEVE", url: "/arm-warmer-sleeve" },
+  { name: "MITTEN", url: "/mitten" },
+  { name: "HEADBAND", url: "/headband" },
+  { name: "GOLF HEADCOVER", url: "/golf-headcover" },
+  { name: "CANVAS BAG", url: "/canvas-bag" },
+  { name: "BASEBALL CAP", url: "/baseball-cap" },
+  { name: "TRUCKER CAP", url: "/trucker-cap" },
+  { name: "FLAT BRIM CAP", url: "/flat-brim-cap" },
+  { name: "BUCKET HAT", url: "/bucket-hat" },
+  { name: "SUN VISOR HAT", url: "/sun-visor-hat" },
+  { name: "FANS  SETS-BEANIE SCARF GLOVE MITTEN", url: "/fans-sets" },
+  { name: "SETS-BEANIE SCARF GLOVE ", url: "/beanie-scarf-glove-sets" },
+  { name: "CHRISTMAS-HAT SCARF GLOVE", url: "/christmas-sets" },
+  { name: "CHRISTMAS STOCKING", url: "/christmas-stocking" },
+  { name: "FAQ & HOW TO ORDER", url: "/how-to-order" }
+];
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{title}</title>
+  <script src="https://cdn.tailwindcss.com" defer></script>
+  <style>
+    :root{
+      font-family: "Microsoft Sans Serif", system-ui, sans-serif;
+    }
+    .nav-item-active{
+      font-weight: 700;
+    }
+    nav a{
+      font-size:12px;
+      text-decoration:none;
+      color:#333;
+      padding:0 6px;
+    }
+    nav a:hover{
+      text-decoration:underline;
+    }
+    .product-img-container{
+      aspect-ratio: 3 / 4;
+    }
+  </style>
+</head>
+<body>
+  <header style="max-width:1920px;margin:0 auto;padding:16px 20px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px;">
+      <!-- 左侧：LOGO + since 2007 同一行 -->
+      <div style="display:flex;align-items:baseline;gap:10px;">
+        <h1 style="font-size:22px;margin:0;font-weight:bold;">KINGMO GROUP</h1>
+        <span style="font-size:11px;color:#666;">since 2007</span>
+      </div>
+      <!-- 右侧：联系信息，分两行 -->
+      <div style="text-align:right;font-size:12px;line-height:1.7;">
+        <!-- 第一行：邮件地址，蓝色 -->
+        <a href="mailto:kingmogroup@gmail.com" style="display:block;color:#0066cc;text-decoration:none;">
+          kingmogroup@gmail.com
+        </a>
+        <!-- 第二行：Whatsapp 加粗 + 数字蓝色正常字体 -->
+        <div style="white-space:nowrap;">
+          <span style="font-weight:bold;color:#333;">Whatsapp:</span>
+          <a href="https://wa.me/8613790639935" target="_blank" style="color:#0066cc;font-weight:normal;text-decoration:none;margin-left:4px;">
+            +86 137 9063 9935 (Wechat ID)
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ 修改：按 URL 自动匹配高亮，不再依赖 activeCategory -->
+    <nav style="line-height:1.2;">
+      {NAV_MENU.map(menu=>{
+        const currentPath = Astro.url.pathname;
+        // 首页精确匹配，其他页面用前缀匹配
+        const isActive = menu.url === "/"
+          ? currentPath === "/"
+          : currentPath.startsWith(menu.url);
+        return (
+          <a href={menu.url} class:list={[{"nav-item-active": isActive}]}>
+            {menu.name}
+          </a>
+        )
+      })}
+    </nav>
+
+    <hr style="border:0;border-top:1px solid #eee;margin:8px 0;" />
+  </header>
+  <slot />
+  <!-- 回到顶部按钮 -->
+  <button
+    id="back-to-top"
+    style="display:none;position:fixed;bottom:30px;right:30px;width:48px;height:48px;border-radius:50%;background:#000;color:#fff;border:none;font-size:20px;cursor:pointer;z-index:9999;box-shadow:0 2px 10px rgba(0,0,0,0.3);transition:opacity 0.3s;"
+    onclick="window.scrollTo({top:0,behavior:'smooth'})"
+  >
+    ↑
+  </button>
+  <script>
+    const backToTopBtn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.style.display = 'block';
+      } else {
+        backToTopBtn.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { armWarmerSleeveImageFilenames } from '../data/armWarmerSleeveFiles.js';
+import { IMG_BASE } from '../data/config.js';
+const PAGE_SIZE = 40;
+const products = armWarmerSleeveImageFilenames.map((fileName, i) => ({
+  id: i,
+  name: `Arm Warmer Sleeve ${fileName}`,
+  image: `${IMG_BASE}/arm_warmer_sleeve/${encodeURIComponent(fileName)}`
+}));
+const firstPage = products.slice(0, PAGE_SIZE);
+const INQUIRY_EMAIL = "kingmogroup@gmail.com;sales12@kingmogroup.ltd;";
+---
+<MainLayout title="Arm Warmer Sleeve Gallery" activeCategory="ARM WARMER SLEEVE">
+  <main class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- ✅ 修改：搜索框 + 随机按钮 + 提示词 -->
+    <div class="mb-8 flex items-center gap-4 flex-wrap">
+      <input
+        id="search-input"
+        type="text"
+        placeholder="Search products..."
+        class="w-full max-w-md border border-gray-300 px-4 py-2 outline-none focus:border-black"
+      />
+      <button
+        id="shuffle-btn"
+        class="bg-black text-white text-xs font-bold tracking-wider px-6 py-2 uppercase hover:bg-gray-800 transition-colors"
+      >
+        Surprise Me!
+      </button>
+      <span class="text-sm text-gray-500 italic">
+        Click for a surprise selection!
+      </span>
+    </div>
+
+    <div
+      id="gallery"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-4"
+    >
+      {firstPage.map((product, index) => {
+        const mailto = `mailto:${INQUIRY_EMAIL}?subject=${encodeURIComponent(`Inquiry for ${product.name}`)}&body=${encodeURIComponent(`Product: ${product.name}\nImage: ${product.image}`)}`;
+        return (
+          <div class="group flex flex-col">
+            <button class="image-btn" data-index={index}>
+              <div class="relative bg-white aspect-[1/1] w-full overflow-hidden">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  class="w-full h-full object-contain object-center bg-white shadow-none"
+                  loading="lazy"
+                />
+              </div>
+            </button>
+            <a
+              href={mailto}
+              class="mt-1 block w-full bg-black text-white text-xs font-bold tracking-wider py-2.5 uppercase text-center hover:bg-gray-800 transition-colors"
+            >
+              Inquiry
+            </a>
+          </div>
+        );
+      })}
+    </div>
+    <div id="loader" class="py-10 text-center text-gray-400 text-sm">
+      加载中…
+    </div>
+    <div id="lightbox" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center">
+      <button id="lb-close" class="absolute top-4 right-6 text-white text-3xl">✕</button>
+      <button id="lb-prev" class="absolute left-4 text-white text-4xl">‹</button>
+      <div class="flex flex-col items-center gap-4">
+        <img id="lb-img" class="max-w-[90vw] max-h-[80vh] cursor-grab bg-white shadow-none" />
+        <a id="lb-inquiry-btn" class="bg-black text-white px-6 py-2.5 text-sm font-bold uppercase hover:bg-gray-800 transition-colors">Inquiry</a>
+      </div>
+      <button id="lb-next" class="absolute right-4 text-white text-4xl">›</button>
+    </div>
+  </main>
+  <script define:vars={{ products }}>
+    window.__ARM_WARMER_ALL_PRODUCTS__ = products;
+  </script>
+  <script>
+    const allProducts = window.__ARM_WARMER_ALL_PRODUCTS__;
+    const PAGE_SIZE = 40;
+    const gallery = document.getElementById('gallery');
+    const loader = document.getElementById('loader');
+    const searchInput = document.getElementById('search-input');
+    const shuffleBtn = document.getElementById('shuffle-btn');
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbInquiryBtn = document.getElementById('lb-inquiry-btn');
+    let page = 1;
+    let loading = false;
+    let filteredList = [...allProducts];
+    let currentId = 0;
+
+    // ✅ Fisher-Yates 洗牌算法，真正随机
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function createCard(product, index) {
+      const subject = `Inquiry for ${product.name}`;
+      const body = `Product: ${product.name}%0D%0AImage: ${product.image}`;
+      const mailto = `mailto:kingmogroup@gmail.com;sales12@kingmogroup.ltd?subject=${encodeURIComponent(subject)}&body=${body}`;
+      const wrapper = document.createElement('div');
+      wrapper.className = 'group flex flex-col';
+      wrapper.innerHTML = `
+        <button class="image-btn" data-index="${index}">
+          <div class="relative bg-white aspect-[1/1] w-full overflow-hidden">
+            <img src="${product.image}" loading="lazy" class="w-full h-full object-contain object-center bg-white shadow-none" />
+          </div>
+        </button>
+        <a href="${mailto}" class="mt-1 block w-full bg-black text-white text-xs font-bold tracking-wider py-2.5 uppercase text-center hover:bg-gray-800">Inquiry</a>
+      `;
+      return wrapper;
+    }
+    function renderList(list) {
+      if(!gallery) return;
+      gallery.innerHTML = '';
+      page = 1;
+      loading = false;
+      if(loader) loader.textContent = '加载中…';
+      const renderCount = Math.min(PAGE_SIZE, list.length);
+      for(let i = 0; i < renderCount; i++){
+        gallery.appendChild(createCard(list[i], i));
+      }
+      if(observer) observer.disconnect();
+      if(loader) observer.observe(loader);
+    }
+    function loadMore() {
+      if (loading) return;
+      if (page * PAGE_SIZE >= filteredList.length) {
+        if(loader) loader.textContent = '— 已加载全部 —';
+        return;
+      }
+      loading = true;
+      page++;
+      const start = (page - 1) * PAGE_SIZE;
+      const end = start + PAGE_SIZE;
+      const nextItems = filteredList.slice(start, end);
+      nextItems.forEach((p, i) => {
+        if(gallery) gallery.appendChild(createCard(p, start + i));
+      });
+      loading = false;
+    }
+    let observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) loadMore();
+    });
+    searchInput?.addEventListener('input', (e) => {
+      const keyword = e.target.value.trim().toLowerCase();
+      filteredList = !keyword
+        ? [...allProducts]
+        : allProducts.filter(item => item.name.toLowerCase().includes(keyword));
+      renderList(filteredList);
+    });
+
+    // ✅ 点击随机按钮：清空搜索框 + 随机打乱 + 重新渲染
+    shuffleBtn?.addEventListener('click', () => {
+      searchInput.value = '';
+      filteredList = shuffleArray(allProducts);
+      renderList(filteredList);
+    });
+
+    function openLightbox(index) {
+      if(!lb || !lbImg || !lbInquiryBtn) return;
+      currentId = index;
+      lb.classList.remove('hidden');
+      lb.classList.add('flex');
+      const item = filteredList[currentId];
+      lbImg.src = item.image;
+      const subject = `Inquiry for ${item.name}`;
+      const body = `Product: ${item.name}%0D%0AImage: ${item.image}`;
+      lbInquiryBtn.href = `mailto:kingmogroup@gmail.com;sales12@kingmogroup.ltd?subject=${encodeURIComponent(subject)}&body=${body}`;
+    }
+    gallery?.addEventListener('click', (e) => {
+      const btn = e.target.closest('.image-btn');
+      if(btn) openLightbox(Number(btn.dataset.index));
+    });
+    document.getElementById('lb-close')?.addEventListener('click', () => {
+      lb?.classList.add('hidden');
+      lb?.classList.remove('flex');
+    });
+    document.getElementById('lb-next')?.addEventListener('click', () => {
+      currentId = (currentId + 1) % filteredList.length;
+      openLightbox(currentId);
+    });
+    document.getElementById('lb-prev')?.addEventListener('click', () => {
+      currentId = (currentId - 1 + filteredList.length) % filteredList.length;
+      openLightbox(currentId);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (!lb || lb.classList.contains('hidden')) return;
+      if(e.key === 'Escape') lb.classList.add('hidden');
+      if(e.key === 'ArrowRight') document.getElementById('lb-next')?.click();
+      if(e.key === 'ArrowLeft') document.getElementById('lb-prev')?.click();
+    });
+    lb?.addEventListener('click', (e) => {
+      if(e.target === lb) {
+        lb.classList.add('hidden');
+        lb.classList.remove('flex');
+      }
+    });
+    // 鼠标拖拽切换
+    let isDragging = false;
+    let dragStartX = 0;
+    const DRAG_THRESHOLD = 60;
+    lbImg?.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      dragStartX = e.clientX;
+      lbImg.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging || !lbImg) return;
+      const diff = e.clientX - dragStartX;
+      if(Math.abs(diff) > DRAG_THRESHOLD) {
+        if(diff > 0) document.getElementById('lb-prev')?.click();
+        else document.getElementById('lb-next')?.click();
+        isDragging = false;
+      }
+    });
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+      if(lbImg) lbImg.style.cursor = 'grab';
+    });
+    // 移动端触摸滑动
+    let touchStartX = 0;
+    lbImg?.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+    });
+    lbImg?.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const diff = touchEndX - touchStartX;
+      if(Math.abs(diff) > DRAG_THRESHOLD) {
+        if(diff > 0) document.getElementById('lb-prev')?.click();
+        else document.getElementById('lb-next')?.click();
+      }
+    });
+    if(loader) observer.observe(loader);
+  </script>
+</MainLayout>

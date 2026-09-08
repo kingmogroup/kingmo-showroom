@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* ========================================
+   全局字体设置
+   优先使用 Windows 的 Microsoft Sans Serif
+   其他系统会依次回退到 Tahoma 或系统默认无衬线字体
+   ======================================== */
+html, body {
+  font-family: "MS Sans Serif", "Microsoft Sans Serif", Tahoma, Geneva, sans-serif;
+}
+
+/* ========================================
+   强制统一交互元素的字体
+   防止 Tailwind 的默认样式或浏览器默认样式覆盖 body 的字体设置
+   ======================================== */
+button,
+input,
+textarea,
+select,
+a {
+  font-family: "MS Sans Serif", "Microsoft Sans Serif", Tahoma, Geneva, sans-serif;
+}
+/* ========================================
+   产品图片网格间距（所有页面统一生效）
+   ======================================== */
+#gallery {
+  row-gap: 2rem !important;    /* 行间距（上下），改这个值就行 */
+  column-gap: 1rem !important; /* 列间距（左右），不改可以删掉这行 */
+}

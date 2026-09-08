@@ -1,0 +1,188 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+const R2_HOME = "https://kingmogroup.top/";
+// 首页activeCategory传 HOME PAGE，导航会高亮HOME PAGE
+---
+
+<MainLayout title="HOME PAGE| KINGMO GROUP" activeCategory="HOME PAGE">
+
+<style>
+/* 只保留首页专属的页面内容样式，不再写html、header、导航 */
+.home-container{
+  max-width:1440px;
+  margin:30px auto 60px;
+  padding:0 20px;
+  text-align:center;
+}
+
+.hero-image{
+  width:100%;
+  max-width:1440px;
+  display:block;
+  margin:0 auto 32px;
+  border-radius:12px;
+}
+
+.home-container h3{
+  font-family: "Poppins", sans-serif;
+  font-size:36px;
+  color:#2b2b2b;
+  font-weight:700;
+  line-height:1.2;
+  margin:40px 0 12px;
+}
+
+.home-container h4{
+  font-family: "Poppins", sans-serif;
+  font-size:32px;
+  color:#2b2b2b;
+  font-weight:700;
+  line-height:1.2;
+  margin:44px 0 16px;
+}
+
+.home-container p.highlight-text {
+  color:#2548cc;
+  font-weight:700;
+}
+
+.home-container p{
+  font-size:16px;
+  color:#777777;
+  font-weight:normal;
+  line-height:1.5;
+  margin-bottom:14px;
+}
+
+.home-container ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.home-container li{
+  font-size:16px;
+  margin:24px 0 6px;
+  color:#333;
+  font-weight:normal;
+}
+
+.factory-photo{
+  width:100%;
+  max-width:1440px;
+  display:block;
+  margin:8px auto 24px auto;
+  border-radius:12px;
+}
+
+.home-container a{
+  color:#0066cc;
+  text-decoration:underline;
+}
+
+@media (max-width:768px) {
+  .home-container h3{font-size:26px;}
+  .home-container h4{font-size:24px;}
+}
+</style>
+
+<div class="home-container">
+    <img
+      class="hero-image"
+      src={R2_HOME+"kingmo_group_beanie_scarf_glove_mitten_headband_oem_odm_factory_in_china_font_page.jpg"}
+      alt="Kingmo winter knitwear hat glove scarf"
+    >
+
+    <h3>Kingmo Group</h3>
+    <p>Kingmo was founded in 2007.</p>
+    <p>Kingmo are trusted by Armani, The Northface, Mizuno, Swix, NB Brothers and so many other brands worldwide.</p>
+
+    <h4>Why Armani & The Northface work with us for decades</h4>
+    <p class="highlight-text">Top quality control system + Competitive price + Better & Strong material supplier chain</p>
+    <p>We have a team of fully dedicated professionals who put our heart and soul into every item we help produce. We are eager to help our customers create their custom products to their exact specifications with the highest quality and lowest cost. We guarantee you will be 100% happy with everything that comes from our hands to yours!</p>
+
+    <h4>Brands we serve</h4>
+    <img class="factory-photo" src={R2_HOME+"kingmo_group_brands_we_work.jpg"} alt="Brands we work with">
+
+    <h4>Certification and other qualifications</h4>
+    <p><strong>Factory certification:</strong> BSCI Report, TUV, SGS</p>
+    <p><strong>Material certification:</strong> BCI, GRS, Oeko Tex 100</p>
+    <img class="factory-photo" src={R2_HOME+"kingmo_group_certification.jpg"} alt="certification">
+
+    <h4>Tour of Kingmo Factory</h4>
+    <ul>
+      <li>Factory Building View 工厂全景实拍</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_factory_2.jpeg"} alt="Factory Building View">
+
+      <li>Factory Building 001# 工厂厂房</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_factory_front_door.jpg"} alt="Factory Building">
+
+      <li>Kingmo Meeting Room – 会议室</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_meetting.jpeg"} alt="Meeting Room">
+
+      <li>Office . PMC 生产计划部</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_pmc_dept.jpeg"} alt="PMC Dept">
+
+      <li>Office Sales Dept 001# 市场营销一部</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_marketing_dept.jpeg"} alt="Sales Marketing Dept">
+
+      <li>Showroom . 样板展示002#</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_showroom_1.jpeg"} alt="Showroom">
+
+      <li>Showroom . 样板展示002#</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_showroom_2.jpeg"} alt="Showroom">
+
+      <li>Knitting Production Line 001# 高弹圆桶提花机 产线001#</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_glove_knit_production_line.png"} alt="Knitting Production Line">
+
+      <li>Knitting Production Line – 手套机织机产线 001#</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_knit_production_line.png"} alt="Knitting Line">
+
+      <li>Knitting Production Line 002# 织机产线 002#</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_magic_machine_production_line.jpeg"} alt="Knitting Line 2">
+
+      <li>Cutting Production Line – 手工裁剪 + 裁床裁剪产线 001</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_workshop_cutting_process.jpeg"} alt="Cutting Line">
+
+      <li>Cutting production line 002# – 裁剪产线 – 手工裁剪 + 刀模裁剪 + 电子裁床 002</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_cutting_line_2.jpeg"} alt="Cutting Line 2">
+
+      <li>Sewing line 001# – 车缝部产线 . 平车 + 锁边 + 电脑车</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_sewing_line_1.jpeg"} alt="Sewing Line">
+
+      <li>Sewing line 002# – 车缝部产线 . 平车 + 锁边 + 电脑车</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_sewing_line_2.jpeg"} alt="Sewing Line2">
+
+      <li>Ironing – 整烫定型产线</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_ironing_line.jpeg"} alt="Ironing Line">
+
+      <li>Hand work – 手工部产线 – 手工缝合 + 线头清理产线 002</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_handwork_line.jpeg"} alt="Hand work">
+
+      <li>Ironing line‑2</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_irnoning_line-2.png"} alt="Ironing Line 2">
+
+      <li>Packing & QC Area – 包装 + QC品检产线</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_packing_line.jpeg"} alt="Packing Area">
+
+      <li>QC Area 002# QC品检产线</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_quality_check_line.jpeg"} alt="QC Area">
+
+      <li>Embroidery line 绣花机产线 1</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_embroidery_line_1.png"} alt="Embroidery line">
+
+      <li>Embroidery line 绣花机产线 2</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_embroidery_line-2.png"} alt="Embroidery line 2">
+
+      <li>Needle inspecting – 验针机</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_needle_metal_inspection_line.jpg"} alt="Needle inspecting">
+
+      <li>Warehouse package area – 包装出货仓</li>
+      <img class="factory-photo" src={R2_HOME+"kingmo_group_mass_production_warehouse.jpg"} alt="Warehouse">
+    </ul>
+     <p style="margin-top:40px;">Contact with us to customize your own brand products at:<br/>
+      <a href="mailto:service@kingmogroup.ltd">service@kingmogroup.ltd</a>
+    </p>
+  </div>
+
+</MainLayout>

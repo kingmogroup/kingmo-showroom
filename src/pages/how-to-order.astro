@@ -1,0 +1,312 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { allImageFilenames } from '../data/allFiles.js';
+import { IMG_BASE } from '../data/config.js';
+// 处理含斜杠的路径（比如 "beanie/BS001_xxx.jpg"），只编码文件名部分，保留斜杠
+function encodePath(path) {
+  return path.split('/').map(segment => encodeURIComponent(segment)).join('/');
+}
+// 从所有产品中随机选
+function shuffleArray(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+// 每个展示区随机选10张
+const randomProducts1 = shuffleArray(allImageFilenames).slice(0, 10).map((fileName, i) => ({
+  id: i,
+  name: fileName,
+  image: `${IMG_BASE}/${encodePath(fileName)}`
+}));
+const randomProducts2 = shuffleArray(allImageFilenames).slice(0, 10).map((fileName, i) => ({
+  id: i,
+  name: fileName,
+  image: `${IMG_BASE}/${encodePath(fileName)}`
+}));
+const INQUIRY_EMAIL = "kingmogroup@gmail.com;sales12@kingmogroup.ltd;";
+---
+<MainLayout title="FAQ - How to Order" activeCategory="HOW TO ORDER & FAQ">
+  <!-- ✅ 页面宽度 1600px，和其他产品页面一致 -->
+  <main class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- 页面标题 -->
+    <h1 class="text-3xl font-bold mb-10 text-center">Frequently Asked Questions</h1>
+
+    <!-- ===<!-- ========== FAQ 1 ========== -->
+<div class="mb-8">
+  <p class="font-bold text-black text-lg mb-2">Q: What is the sample time, sample cost, shipping time?</p>
+  
+  <p class="text-blue-600 mb-2">
+    <strong>Sample time:</strong> 7 - 10 days after receiving the sample fee; <strong>Sample cost:</strong> $50 - $100 at most cases, per color, per size, per design; <strong>Sample shipping time:</strong> 7 - 10 days via Fedex, UPS, DHL. shipping fee is around 50USD mostly
+  </p>
+</div>
+
+<!-- ========== FAQ 2 ========== -->
+<div class="mb-8">
+  <p class="font-bold text-black text-lg mb-2">Q: What is your MOQ, bulk production time, shipping time, shipping cost? </p>
+  
+  <p class="text-blue-600 mb-2">
+    <strong>MOQ:</strong> Our MOQ is 500 pieces per design per color. Small orders are also welcome for trial orders. <strong>Bulk production time:</strong> 2000pcs, 25 - 30 days, 5000-10Kpcs, 30 - 35 days, 20-50Kpcs, 40 - 50 days. <strong>Note:</strong> For large-volume orders, you might consider delivering the shipment in batches.  <strong>Shipping time:</strong> 10 - 15 days via Fedex, UPS, DHL. shipping fee depends on the destination and package size. <strong>Shipping cost:</strong> we need your detailed receiver information address + postal code, so shipping agency can confirm the shipping cost and details as return.
+  </p>
+</div>
+
+
+    <!-- ========== 产品展示区 1（随机10张，两行每行5张） ========== -->
+    <div class="my-12 py-8 border-t border-b border-gray-200">
+      <h3 class="text-center text-gray-500 text-sm mb-6 uppercase tracking-wider">Everytime Refresh For A Surprise selection!</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
+        {randomProducts1.map((product, index) => {
+          const mailto = `mailto:${INQUIRY_EMAIL}?subject=${encodeURIComponent(`Inquiry for ${product.name}`)}&body=${encodeURIComponent(`Product: ${product.name}\nImage: ${product.image}`)}`;
+          return (
+            <div class="group flex flex-col">
+              <button class="faq-image-btn" data-index={index} data-group="1">
+                <div class="relative bg-white aspect-[1/1] w-full overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    class="w-full h-full object-contain object-center bg-white shadow-none"
+                    loading="lazy"
+                  />
+                </div>
+              </button>
+              <a
+                href={mailto}
+                class="mt-1 block w-full bg-black text-white text-xs font-bold tracking-wider py-2.5 uppercase text-center hover:bg-gray-800 transition-colors"
+              >
+                Inquiry
+              </a>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- ========== FAQ 4 ========== -->
+    <div class="mb-6">
+      <p class="font-bold text-black text-lg mb-2">Q: Can you do custom logo according to our design or an idea?</p>
+      <p class="text-blue-600 mb-1">A: Yes!  We support embroidery, silkscreen print, jacquard, priviate label, woven label, and leather patch and many other different logos, we'll make a sample for confirmation before you place an bulk order.<br />
+    <strong>If you have detailed design files: </strong> Send us the files and discuss about the details of your requirements.<br />
+    <strong>No design files: </strong> Send us a sample photo, help us to understand your idea and the item you want it, select from our catalog or google one. then we may discuss about the further details as sample development and bulk production.<br />
+      </p>
+    </div>
+
+    <!-- ========== FAQ 5 ========== -->
+    <div class="mb-6">
+      <p class="font-bold text-black text-lg mb-2">Q: What's the material, fabric, and colors do you offer?</p>
+      <p class="text-blue-600 mb-1">A: We offer a variety of materials, fabrics, and colors to suit your needs, most what you can see on the market, we can customize accordingly. Please contact us for more information.<br />
+      <strong>Material: </strong> Cotton, Polyester, Nylon, Acrylic, Lambswool, Merino, Cashmere, Viscose, PBT, Recycled materials and many others.<br />
+      <strong>Color: </strong> Most material has its color chart like 100-500 different colors for choice, unique color is available for customization dyeing, we confirm colors matchs with Pantone Code mostly like TPG + TCX series, some few work with C + U series codes.<br />
+      </p>
+    </div>
+
+    <!-- ========== 产品展示区 2（随机10张，两行每行5张） ========== -->
+    <div class="my-12 py-8 border-t border-b border-gray-200">
+      <h3 class="text-center text-gray-500 text-sm mb-6 uppercase tracking-wider">Everytime Refresh For A Surprise selection!</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
+        {randomProducts2.map((product, index) => {
+          const mailto = `mailto:${INQUIRY_EMAIL}?subject=${encodeURIComponent(`Inquiry for ${product.name}`)}&body=${encodeURIComponent(`Product: ${product.name}\nImage: ${product.image}`)}`;
+          return (
+            <div class="group flex flex-col">
+              <button class="faq-image-btn" data-index={index} data-group="2">
+                <div class="relative bg-white aspect-[1/1] w-full overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    class="w-full h-full object-contain object-center bg-white shadow-none"
+                    loading="lazy"
+                  />
+                </div>
+              </button>
+              <a
+                href={mailto}
+                class="mt-1 block w-full bg-black text-white text-xs font-bold tracking-wider py-2.5 uppercase text-center hover:bg-gray-800 transition-colors"
+              >
+                Inquiry
+              </a>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- ========== FAQ 6 ========== -->
+    <div class="mb-6">
+      <p class="font-bold text-black text-lg mb-2">Q: How do I place an order?</p>
+      <p class="text-blue-600 mb-1">A: 
+        
+        <strong>1st step:</strong> Send us your design or choose a sample photo from our catalog, or google a reference image. We confirm all details with you, including product style, material, color, size, and different logos etc. <br />
+        <strong>2nd step:</strong> Then we confirm sample cost and bulk unit price, all confirmed, then we issue you sample invoice, send the sample cost to  make a sample before bulk production. <br />
+        <strong>3rd step:</strong> Sample ready, we wil send you HD sample photo and video for check, or send the sample to your hands. <br />
+        <strong>4th step:</strong> After sample approval, start to bulk production. Pay 30% deposit. bulk production time is usually 30 - 40 days. <br />
+        <strong>5th step:</strong> When bulk production is complete, we will notify you and arrange for quality check and shipping.</p>
+
+        </div>
+
+    <!-- ========== FAQ 7 ========== -->
+    <div class="mb-6">
+      <p class="font-bold text-black text-lg mb-2">Q: What payment terms do you accept?</p>
+      <p class="text-blue-600 mb-1">A: We accept T/T, 30% deposit in advance, 70% balance after quality checkbefore shipment.</p>
+
+      
+    
+    </div>
+
+<!-- ========== FAQ 8 ========== -->
+    <div class="mb-6">
+      <p class="font-bold text-black text-lg mb-2">Q: What shipping methods do you offer?</p>
+      <p class="text-blue-600 mb-1">A: We offer DHL, FedEx, UPS, EMS, and sea shipping. We can also ship to your designated freight forwarder.<br />
+      <strong>Ship via Airline:</strong> It takes about 10 - 15 days at usual, needs your detailed address + zip code for cost check and delivery timing check.<br />
+      <strong>Ship via Sea or Rail:</strong> It takes about 30 - 40 days at usual, needs your detailed address + zip code to check out the cost check and delivery timing.</p>
+    </div>
+
+
+    <!-- ========== FAQ 9 ========== -->
+    <div class="mb-6">
+      <p class="font-bold text-black text-lg mb-2">Q: Can I get a discount for large orders?</p>
+      <p class="text-blue-600 mb-1">A: Yes, the unit price decreases as the order quantity increases. Contact us for a detailed quotation according to your unique requirements.</p>
+    </div>
+
+      <!-- ========== 产品展示区 3（随机10张，两行每行5张） ========== -->
+    <div class="my-12 py-8 border-t border-b border-gray-200">
+      <h3 class="text-center text-gray-500 text-sm mb-6 uppercase tracking-wider">Everytime Refresh For A Surprise selection!</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
+        {randomProducts2.map((product, index) => {
+          const mailto = `mailto:${INQUIRY_EMAIL}?subject=${encodeURIComponent(`Inquiry for ${product.name}`)}&body=${encodeURIComponent(`Product: ${product.name}\nImage: ${product.image}`)}`;
+          return (
+            <div class="group flex flex-col">
+              <button class="faq-image-btn" data-index={index} data-group="2">
+                <div class="relative bg-white aspect-[1/1] w-full overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    class="w-full h-full object-contain object-center bg-white shadow-none"
+                    loading="lazy"
+                  />
+                </div>
+              </button>
+              <a
+                href={mailto}
+                class="mt-1 block w-full bg-black text-white text-xs font-bold tracking-wider py-2.5 uppercase text-center hover:bg-gray-800 transition-colors"
+              >
+                Inquiry
+              </a>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- 底部联系提示 -->
+    <div class="mt-12 p-8 bg-gray-50 text-center">
+      <p class="text-gray-600 mb-4">Still have questions?</p>
+      <a
+        href={`mailto:${INQUIRY_EMAIL}?subject=Question from FAQ page`}
+        class="inline-block bg-black text-white px-8 py-3 text-sm font-bold uppercase hover:bg-gray-800 transition-colors"
+      >
+        Contact Us
+      </a>
+    </div>
+
+    <!-- 灯箱 -->
+    <div id="lightbox" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center">
+      <button id="lb-close" class="absolute top-4 right-6 text-white text-3xl">✕</button>
+      <button id="lb-prev" class="absolute left-4 text-white text-4xl">‹</button>
+      <div class="flex flex-col items-center gap-4">
+        <img id="lb-img" class="max-w-[90vw] max-h-[80vh] cursor-grab bg-white" />
+        <a id="lb-inquiry-btn" class="bg-black text-white px-6 py-2.5 text-sm font-bold uppercase hover:bg-gray-800 transition-colors">Inquiry</a>
+      </div>
+      <button id="lb-next" class="absolute right-4 text-white text-4xl">›</button>
+    </div>
+  </main>
+
+  <script define:vars={{ randomProducts1, randomProducts2 }}>
+    window.__FAQ_PRODUCTS_GROUP1__ = randomProducts1;
+    window.__FAQ_PRODUCTS_GROUP2__ = randomProducts2;
+  </script>
+
+  <script>
+    const group1 = window.__FAQ_PRODUCTS_GROUP1__;
+    const group2 = window.__FAQ_PRODUCTS_GROUP2__;
+    let currentList = group1;
+    let currentId = 0;
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbInquiryBtn = document.getElementById('lb-inquiry-btn');
+    function openLightbox(index, group) {
+      currentList = group === '1' ? group1 : group2;
+      currentId = index;
+      lb.classList.remove('hidden');
+      lb.classList.add('flex');
+      const item = currentList[currentId];
+      lbImg.src = item.image;
+      const subject = `Inquiry for ${item.name}`;
+      const body = `Product: ${item.name}%0D%0AImage: ${item.image}`;
+      lbInquiryBtn.href = `mailto:kingmogroup@gmail.com;sales12@kingmogroup.ltd?subject=${encodeURIComponent(subject)}&body=${body}`;
+    }
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.faq-image-btn');
+      if (btn) openLightbox(Number(btn.dataset.index), btn.dataset.group);
+    });
+    document.getElementById('lb-close').onclick = () => {
+      lb.classList.add('hidden');
+      lb.classList.remove('flex');
+    };
+    document.getElementById('lb-next').onclick = () => {
+      currentId = (currentId + 1) % currentList.length;
+      openLightbox(currentId, currentList === group1 ? '1' : '2');
+    };
+    document.getElementById('lb-prev').onclick = () => {
+      currentId = (currentId - 1 + currentList.length) % currentList.length;
+      openLightbox(currentId, currentList === group1 ? '1' : '2');
+    };
+    document.addEventListener('keydown', e => {
+      if (lb.classList.contains('hidden')) return;
+      if (e.key === 'Escape') lb.click();
+      if (e.key === 'ArrowRight') document.getElementById('lb-next').click();
+      if (e.key === 'ArrowLeft') document.getElementById('lb-prev').click();
+    });
+    lb.addEventListener('click', e => {
+      if (e.target === lb) {
+        lb.classList.add('hidden');
+        lb.classList.remove('flex');
+      }
+    });
+    // 鼠标拖拽切换
+    let isDragging = false;
+    let dragStartX = 0;
+    const DRAG_THRESHOLD = 60;
+    lbImg.addEventListener('mousedown', e => {
+      isDragging = true;
+      dragStartX = e.clientX;
+      lbImg.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      const diff = e.clientX - dragStartX;
+      if (Math.abs(diff) > DRAG_THRESHOLD) {
+        if (diff > 0) document.getElementById('lb-prev').click();
+        else document.getElementById('lb-next').click();
+        isDragging = false;
+      }
+    });
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+      lbImg.style.cursor = 'grab';
+    });
+    // 移动端触摸滑动
+    let touchStartX = 0;
+    lbImg.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+    });
+    lbImg.addEventListener('touchend', e => {
+      const diff = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(diff) > DRAG_THRESHOLD) {
+        if (diff > 0) document.getElementById('lb-prev').click();
+        else document.getElementById('lb-next').click();
+      }
+    });
+  </script>
+</MainLayout>
