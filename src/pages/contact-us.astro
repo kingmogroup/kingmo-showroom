@@ -1,7 +1,5 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-
-// ✅ 把下面的 YOUR_ACCESS_KEY 换成你从 Web3Forms 收到的 Key
 const WEB3FORMS_ACCESS_KEY = "5540153c-0bf9-4a8b-8ade-d142aae5755f";
 ---
 
@@ -16,6 +14,7 @@ const WEB3FORMS_ACCESS_KEY = "5540153c-0bf9-4a8b-8ade-d142aae5755f";
     <form
       action="https://api.web3forms.com/submit"
       method="POST"
+      enctype="multipart/form-data"
       class="space-y-6"
     >
       <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
@@ -70,6 +69,23 @@ const WEB3FORMS_ACCESS_KEY = "5540153c-0bf9-4a8b-8ade-d142aae5755f";
         ></textarea>
       </div>
 
+      <!-- ✅ 附件上传 -->
+      <div>
+        <label class="block text-sm font-bold uppercase tracking-wider mb-2">
+          Attach Files (optional, max 10MB)
+        </label>
+        <input
+          type="file"
+          name="attachment"
+          multiple
+          accept=".jpg,.jpeg,.png,.pdf,.ai,.eps,.zip"
+          class="w-full border border-gray-300 px-4 py-3 outline-none focus:border-black bg-white"
+        />
+        <p class="text-xs text-gray-400 mt-1">
+          You can attach product images, design files, or reference pictures.
+        </p>
+      </div>
+
       <!-- 提交按钮 -->
       <button
         type="submit"
@@ -83,14 +99,14 @@ const WEB3FORMS_ACCESS_KEY = "5540153c-0bf9-4a8b-8ade-d142aae5755f";
     </form>
 
     <!-- 底部联系信息 -->
-<div class="mt-12 pt-8 border-t border-gray-200 text-center text-sm text-gray-600 space-y-2">
-  <p><strong>WhatsApp / WeChat:</strong> +86 137 9063 9935</p>
-  <p>
-    <strong>Email us directly:</strong>
-    <a href="mailto:kingmogroup@gmail.com" class="text-blue-600"> kingmogroup@gmail.com</a>
-  </p>
-  <p><strong>Business Hours:</strong> Monday - Saturday, 9:00 - 18:00 (GMT+8)</p>
-</div>
+    <div class="mt-12 pt-8 border-t border-gray-200 text-center text-sm text-gray-600 space-y-2">
+      <p><strong>WhatsApp / WeChat:</strong> +86 137 9063 9935</p>
+      <p>
+        <strong>Email us directly:</strong>
+        <a href="mailto:kingmogroup@gmail.com" class="text-blue-600"> kingmogroup@gmail.com</a>
+      </p>
+      <p><strong>Business Hours:</strong> Monday - Saturday, 9:00 - 18:00 (GMT+8)</p>
+    </div>
 
   </main>
 
