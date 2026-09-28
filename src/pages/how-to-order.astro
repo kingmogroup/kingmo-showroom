@@ -69,38 +69,7 @@ const INQUIRY_EMAIL = "kingmogroup@gmail.com;sales12@kingmogroup.ltd;";
   </p>
 </div>
 
-
-    <!-- ========== 产品展示区 1（随机10张，两行每行5张） ========== -->
-    <div class="my-12 py-8 border-t border-b border-gray-200">
-      <h3 class="text-center text-gray-500 text-sm mb-6 uppercase tracking-wider">Everytime Refresh For A Surprise selection!</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
-        {randomProducts1.map((product, index) => {
-          const mailto = `mailto:${INQUIRY_EMAIL}?subject=${encodeURIComponent(`Inquiry for ${product.name}`)}&body=${encodeURIComponent(`Product: ${product.name}\nImage: ${product.image}`)}`;
-          return (
-            <div class="group flex flex-col">
-              <button class="faq-image-btn" data-index={index} data-group="1">
-                <div class="relative bg-white aspect-[1/1] w-full overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    class="w-full h-full object-contain object-center bg-white shadow-none"
-                    loading="lazy"
-                  />
-                </div>
-              </button>
-              <a
-                href={mailto}
-                class="mt-1 block w-full bg-black text-white text-xs font-bold tracking-wider py-2.5 uppercase text-center hover:bg-gray-800 transition-colors"
-              >
-                Inquiry
-              </a>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-
-    <!-- ========== FAQ 4 ========== -->
+  <!-- ========== FAQ 4 ========== -->
     <div class="mb-6">
       <p class="font-bold text-black text-lg mb-2">Q: Can you do custom logo according to our design or an idea?</p>
       <p class="text-blue-600 mb-1">A: Yes!  We support embroidery, silkscreen print, jacquard, priviate label, woven label, and leather patch and many other different logos, we'll make a sample for confirmation before you place an bulk order.<br />
@@ -116,36 +85,6 @@ const INQUIRY_EMAIL = "kingmogroup@gmail.com;sales12@kingmogroup.ltd;";
       <strong>Material: </strong> Cotton, Polyester, Nylon, Acrylic, Lambswool, Merino, Cashmere, Viscose, PBT, Recycled materials and many others.<br />
       <strong>Color: </strong> Most material has its color chart like 100-500 different colors for choice, unique color is available for customization dyeing, we confirm colors matchs with Pantone Code mostly like TPG + TCX series, some few work with C + U series codes.<br />
       </p>
-    </div>
-
-    <!-- ========== 产品展示区 2（随机10张，两行每行5张） ========== -->
-    <div class="my-12 py-8 border-t border-b border-gray-200">
-      <h3 class="text-center text-gray-500 text-sm mb-6 uppercase tracking-wider">Everytime Refresh For A Surprise selection!</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
-        {randomProducts2.map((product, index) => {
-          const mailto = `mailto:${INQUIRY_EMAIL}?subject=${encodeURIComponent(`Inquiry for ${product.name}`)}&body=${encodeURIComponent(`Product: ${product.name}\nImage: ${product.image}`)}`;
-          return (
-            <div class="group flex flex-col">
-              <button class="faq-image-btn" data-index={index} data-group="2">
-                <div class="relative bg-white aspect-[1/1] w-full overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    class="w-full h-full object-contain object-center bg-white shadow-none"
-                    loading="lazy"
-                  />
-                </div>
-              </button>
-              <a
-                href={mailto}
-                class="mt-1 block w-full bg-black text-white text-xs font-bold tracking-wider py-2.5 uppercase text-center hover:bg-gray-800 transition-colors"
-              >
-                Inquiry
-              </a>
-            </div>
-          );
-        })}
-      </div>
     </div>
 
     <!-- ========== FAQ 6 ========== -->
@@ -183,6 +122,66 @@ const INQUIRY_EMAIL = "kingmogroup@gmail.com;sales12@kingmogroup.ltd;";
     <div class="mb-6">
       <p class="font-bold text-black text-lg mb-2">Q: Can I get a discount for large orders?</p>
       <p class="text-blue-600 mb-1">A: Yes, the unit price decreases as the order quantity increases. Contact us for a detailed quotation according to your unique requirements.</p>
+    </div>
+
+    <!-- ========== 产品展示区 1（随机10张，两行每行5张） ========== -->
+    <div class="my-12 py-8 border-t border-b border-gray-200">
+      <h3 class="text-center text-gray-500 text-sm mb-6 uppercase tracking-wider">Everytime Refresh For A Surprise selection!</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
+        {randomProducts1.map((product, index) => {
+          const mailto = `mailto:${INQUIRY_EMAIL}?subject=${encodeURIComponent(`Inquiry for ${product.name}`)}&body=${encodeURIComponent(`Product: ${product.name}\nImage: ${product.image}`)}`;
+          return (
+            <div class="group flex flex-col">
+              <button class="faq-image-btn" data-index={index} data-group="1">
+                <div class="relative bg-white aspect-[1/1] w-full overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    class="w-full h-full object-contain object-center bg-white shadow-none"
+                    loading="lazy"
+                  />
+                </div>
+              </button>
+              <a
+                href={mailto}
+                class="mt-1 block w-full bg-black text-white text-xs font-bold tracking-wider py-2.5 uppercase text-center hover:bg-gray-800 transition-colors"
+              >
+                Inquiry
+              </a>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- ========== 产品展示区 2（随机10张，两行每行5张） ========== -->
+    <div class="my-12 py-8 border-t border-b border-gray-200">
+      <h3 class="text-center text-gray-500 text-sm mb-6 uppercase tracking-wider">Everytime Refresh For A Surprise selection!</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
+        {randomProducts2.map((product, index) => {
+          const mailto = `mailto:${INQUIRY_EMAIL}?subject=${encodeURIComponent(`Inquiry for ${product.name}`)}&body=${encodeURIComponent(`Product: ${product.name}\nImage: ${product.image}`)}`;
+          return (
+            <div class="group flex flex-col">
+              <button class="faq-image-btn" data-index={index} data-group="2">
+                <div class="relative bg-white aspect-[1/1] w-full overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    class="w-full h-full object-contain object-center bg-white shadow-none"
+                    loading="lazy"
+                  />
+                </div>
+              </button>
+              <a
+                href={mailto}
+                class="mt-1 block w-full bg-black text-white text-xs font-bold tracking-wider py-2.5 uppercase text-center hover:bg-gray-800 transition-colors"
+              >
+                Inquiry
+              </a>
+            </div>
+          );
+        })}
+      </div>
     </div>
 
       <!-- ========== 产品展示区 3（随机10张，两行每行5张） ========== -->
